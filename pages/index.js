@@ -3,17 +3,13 @@ import Script from "next/script";
 import { useEffect } from "react";
 
 export default function Home() {
-  useEffect(() => {
-    function identityLoaded() {
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("login", () => {
-          window.location.href = "/dashboard";
-        });
-      }
-    }
 
-    window.addEventListener("load", identityLoaded);
-    return () => window.removeEventListener("load", identityLoaded);
+  useEffect(() => {
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("login", () => {
+        window.location.href = "/dashboard";
+      });
+    }
   }, []);
 
   return (
@@ -22,14 +18,20 @@ export default function Home() {
         <title>Customer Portal</title>
       </Head>
 
-      <Script src="https://identity.netlify.com/v1/netlify-identity-widget.js" />
+      {/* Netlify Identity */}
+      <Script
+        src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+        onLoad={() => {
+          if (window.netlifyIdentity) {
+            window.netlifyIdentity.init();
+          }
+        }}
+      />
 
       {/* HERO */}
       <section className="hero">
         <h1>Customer Portal</h1>
-        <p>
-          Secure access to your reports, insights and services.
-        </p>
+        <p>Secure access to your reports, insights and services.</p>
       </section>
 
       {/* LOGIN CARD */}
