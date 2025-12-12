@@ -7,20 +7,16 @@ import { useEffect } from 'react'
 export default function Home() {
 
   useEffect(() => {
-    // Identity widget yüklendiğinde çalışacak fonksiyon
     function identityLoaded() {
       if (window.netlifyIdentity) {
-        // Login event'i dinle
         window.netlifyIdentity.on('login', () => {
           window.location.href = "/dashboard";
         });
       }
     }
 
-    // Sayfa tamamen yüklendiğinde çalıştır
     window.addEventListener('load', identityLoaded);
 
-    // Cleanup (React gereği)
     return () => window.removeEventListener('load', identityLoaded);
   }, []);
 
@@ -42,12 +38,12 @@ export default function Home() {
         </p>
 
         <div style={{ marginTop: 20 }}>
-          {/* Login butonu */}
+          {/* Login button */}
           <button onClick={() => window.netlifyIdentity.open('login')}>
             Giriş Yap
           </button>
 
-          {/* Signup butonu */}
+          {/* Signup button */}
           <button
             style={{ marginLeft: 10 }}
             onClick={() => window.netlifyIdentity.open('signup')}
