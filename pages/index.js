@@ -1,17 +1,7 @@
 import Head from "next/head";
 import Script from "next/script";
-import { useEffect } from "react";
 
 export default function Home() {
-
-  useEffect(() => {
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("login", () => {
-        window.location.href = "/dashboard";
-      });
-    }
-  }, []);
-
   return (
     <div className="container">
       <Head>
@@ -43,13 +33,19 @@ export default function Home() {
           </p>
 
           <div style={{ marginTop: 30 }}>
+            {/* LOGIN */}
             <button
               style={{ width: "100%" }}
-              onClick={() => window.netlifyIdentity.open("login")}
+              onClick={() =>
+                window.netlifyIdentity.open("login", {
+                  redirect: "/dashboard",
+                })
+              }
             >
               Login
             </button>
 
+            {/* SIGNUP */}
             <button
               style={{
                 width: "100%",
@@ -58,7 +54,11 @@ export default function Home() {
                 color: "#003B6F",
                 border: "2px solid #003B6F",
               }}
-              onClick={() => window.netlifyIdentity.open("signup")}
+              onClick={() =>
+                window.netlifyIdentity.open("signup", {
+                  redirect: "/dashboard",
+                })
+              }
             >
               Create Account
             </button>
