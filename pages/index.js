@@ -1,59 +1,68 @@
-import Head from 'next/head'
-import Header from '@components/Header'
-import Footer from '@components/Footer'
-import Script from 'next/script'
-import { useEffect } from 'react'
+import Head from "next/head";
+import Script from "next/script";
+import { useEffect } from "react";
 
 export default function Home() {
-
   useEffect(() => {
     function identityLoaded() {
       if (window.netlifyIdentity) {
-        window.netlifyIdentity.on('login', () => {
+        window.netlifyIdentity.on("login", () => {
           window.location.href = "/dashboard";
         });
       }
     }
 
-    window.addEventListener('load', identityLoaded);
-
-    return () => window.removeEventListener('load', identityLoaded);
+    window.addEventListener("load", identityLoaded);
+    return () => window.removeEventListener("load", identityLoaded);
   }, []);
 
   return (
     <div className="container">
       <Head>
-        <title>Next.js Customer Portal</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Customer Portal</title>
       </Head>
 
-      {/* Netlify Identity Script */}
       <Script src="https://identity.netlify.com/v1/netlify-identity-widget.js" />
 
-      <main>
-        <Header title="Customer Portal'a Hoşgeldiniz" />
-
-        <p className="description">
-          Giriş yapmak için aşağıdaki butonları kullanabilirsiniz:
+      {/* HERO */}
+      <section className="hero">
+        <h1>Customer Portal</h1>
+        <p>
+          Secure access to your reports, insights and services.
         </p>
+      </section>
 
-        <div style={{ marginTop: 20 }}>
-          {/* Login button */}
-          <button onClick={() => window.netlifyIdentity.open('login')}>
-            Giriş Yap
-          </button>
+      {/* LOGIN CARD */}
+      <section className="center">
+        <div className="card" style={{ maxWidth: 420, width: "100%" }}>
+          <h2 style={{ marginTop: 0 }}>Sign in</h2>
+          <p style={{ opacity: 0.7 }}>
+            Please sign in to access your personalized dashboard.
+          </p>
 
-          {/* Signup button */}
-          <button
-            style={{ marginLeft: 10 }}
-            onClick={() => window.netlifyIdentity.open('signup')}
-          >
-            Kayıt Ol
-          </button>
+          <div style={{ marginTop: 30 }}>
+            <button
+              style={{ width: "100%" }}
+              onClick={() => window.netlifyIdentity.open("login")}
+            >
+              Login
+            </button>
+
+            <button
+              style={{
+                width: "100%",
+                marginTop: 12,
+                background: "transparent",
+                color: "#003B6F",
+                border: "2px solid #003B6F",
+              }}
+              onClick={() => window.netlifyIdentity.open("signup")}
+            >
+              Create Account
+            </button>
+          </div>
         </div>
-      </main>
-
-      <Footer />
+      </section>
     </div>
-  )
+  );
 }
